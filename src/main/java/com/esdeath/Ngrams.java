@@ -19,30 +19,31 @@ public class Ngrams
     public static void main( String[] args )
     {
         //User input N
-        value_n = inputN();
-        filename = inputFilename();
-        bufferedReader = getReader();
+        setN(inputN());
+        setFileName(inputFilename());
+        setReader(getReader());
 
         while(bufferedReader == null) {
             System.out.println("Can't open this file!");
-            bufferedReader = getReader();
+            setReader(getReader());
         }
 
         buildWordList();
         buildWordMap();
 
+        int word_num;
+        Scanner scanner = new Scanner(System.in);
         //Main process:random write
         while (true){
-            int word_num;
             System.out.print("# of random words to generate(0 to quit)?");
-            Scanner scanner = new Scanner(System.in);
             word_num = scanner.nextInt();
+            // Quit if input 0
+            if(word_num == 0) break;
             while(word_num <= value_n){
+                System.out.println("The number of random words should be greater than N!");
                 System.out.print("# of random words to generate(0 to quit)?");
                 word_num = scanner.nextInt();
             }
-            // Quit if input 0
-            if(word_num == 0) break;
             randomWrite(word_num);
         }
         System.out.println("Exiting...");
@@ -177,5 +178,16 @@ public class Ngrams
 
     public static void setFileName(String name){
         filename = name;
+    }
+
+    public static void setReader(BufferedReader reader){
+        bufferedReader = reader;
+    }
+    public static LinkedList<String> getWordList(){
+        return word_list;
+    }
+
+    public static HashMap<String, ArrayList<String>> getWordMap(){
+        return next_word_map;
     }
 }
